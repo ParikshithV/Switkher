@@ -1,0 +1,40 @@
+{
+  "fill" : {
+    "linear-gradient" : [
+      "srgb:0.14902,0.14902,0.15686,1.00000",
+      "srgb:0.14902,0.14902,0.15686,1.00000"
+    ],
+    "orientation" : {
+      "start" : { "x" : 0.5, "y" : 0 },
+      "stop" : { "x" : 0.5, "y" : 1 }
+    }
+  },
+  "groups" : [
+    {
+      "name" : "Deck",
+      "layers" : [
+        { "name" : "Stripes", "image-name" : "stripes.png", "glass" : false },
+        { "name" : "Lip", "image-name" : "lip.png", "glass" : true }
+      ],
+      "shadow" : { "kind" : "layer-color", "opacity" : 0.5 },
+      "translucency" : { "enabled" : true, "value" : 0.1 },
+      "specular" : true,
+      "lighting" : "combined"
+    },
+    {
+      "name" : "Keys",
+      "layers" : [
+        { "name" : "Glyphs", "image-name" : "glyphs.png", "glass" : false },
+        { "name" : "Window Chrome", "image-name" : "chrome.png", "glass" : false },
+        { "name" : "Keys", "image-name" : "keys.png", "glass" : true }
+      ],
+      "shadow" : { "kind" : "neutral", "opacity" : 0.5 },
+      "translucency" : { "enabled" : true, "value" : 0.25 },
+      "specular" : true,
+      "lighting" : "individual"
+    }
+  ],
+  "supported-platforms" : {
+    "squares" : "shared"
+  }
+}
