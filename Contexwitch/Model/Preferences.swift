@@ -4,6 +4,7 @@
 //
 
 import Foundation
+import ServiceManagement
 
 enum PrefKey {
     static let sortOrder = "sortOrder"
@@ -15,6 +16,7 @@ enum PrefKey {
     static let longPressKey = "longPressKey"
     static let longPressDelay = "longPressDelay"
     static let favoriteApps = "favoriteApps"
+    static let didEnableLaunchAtLogin = "didEnableLaunchAtLogin"
 }
 
 enum SortOrder: String, CaseIterable, Identifiable {
@@ -44,6 +46,14 @@ enum Preferences {
             PrefKey.longPressDelay: 0.4,
             PrefKey.favoriteApps: FavoriteApps().rawValue,
         ])
+    }
+
+    /// Launch at login is on by default. The login item lives in the system, not in
+    /// UserDefaults, so register it once on first launch and leave it to the user after that.
+    static func enableLaunchAtLoginOnFirstRun() {
+        guard !defaults.bool(forKey: PrefKey.didEnableLaunchAtLogin) else { return }
+        defaults.set(true, forKey: PrefKey.didEnableLaunchAtLogin)
+        try? SMAppService.mainApp.register()
     }
 
     static var longPressKey: LongPressKey {

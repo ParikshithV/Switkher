@@ -13,6 +13,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         Preferences.registerDefaults()
+        Preferences.enableLaunchAtLoginOnFirstRun()
         AXUIElementSetMessagingTimeout(AXUIElementCreateSystemWide(), 0.3)
         HotKeyController.shared.apply()
 

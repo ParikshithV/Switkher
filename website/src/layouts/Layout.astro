@@ -1,0 +1,117 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'Switkher — Every window and tab, one keystroke away',
+	description = 'Switkher is a fast, keyboard-first window and tab switcher for macOS. Search every window across every Space, jump to tabs, and launch favorite apps with a single letter.',
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="color-scheme" content="dark" />
+		<meta name="theme-color" content="#0d0a12" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content="/icon.png" />
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--bg: #0d0a12;
+		--surface: rgba(255, 255, 255, 0.04);
+		--border: rgba(255, 255, 255, 0.09);
+		--text: #f4f1f8;
+		--muted: rgba(244, 241, 248, 0.62);
+		--faint: rgba(244, 241, 248, 0.38);
+		--plum: #3b2a4f;
+		--yellow: #f4cf6b;
+		--orange: #ec8a4a;
+		--pink: #e5546f;
+		--cream: #f5ead6;
+		--radius: 18px;
+		--font: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Inter', 'Segoe UI', system-ui, sans-serif;
+		--mono: ui-monospace, 'SF Mono', Menlo, monospace;
+	}
+
+	*,
+	*::before,
+	*::after {
+		box-sizing: border-box;
+	}
+
+	html {
+		scroll-behavior: smooth;
+	}
+
+	body {
+		margin: 0;
+		background: var(--bg);
+		color: var(--text);
+		font-family: var(--font);
+		font-size: 17px;
+		line-height: 1.55;
+		-webkit-font-smoothing: antialiased;
+	}
+
+	a {
+		color: inherit;
+	}
+
+	kbd {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-width: 1.9em;
+		height: 1.9em;
+		padding: 0 0.5em;
+		border-radius: 7px;
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		border-bottom-width: 2px;
+		background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.04));
+		font-family: var(--font);
+		font-size: 0.85em;
+		font-weight: 500;
+		line-height: 1;
+		white-space: nowrap;
+	}
+
+	.container {
+		width: min(1120px, 100% - 48px);
+		margin-inline: auto;
+	}
+
+	.gradient-text {
+		background: linear-gradient(90deg, var(--yellow), var(--orange) 50%, var(--pink));
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		html {
+			scroll-behavior: auto;
+		}
+		*,
+		*::before,
+		*::after {
+			animation: none !important;
+			transition: none !important;
+		}
+	}
+</style>

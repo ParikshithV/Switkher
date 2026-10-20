@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		EDDA54C13082781100622195 /* Contexwitch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = Contexwitch.app; path = Switkher.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EDDA54C13082781100622195 /* Switkher.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Switkher.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -38,7 +38,7 @@
 		EDDA54C23082781100622195 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				EDDA54C13082781100622195 /* Contexwitch.app */,
+				EDDA54C13082781100622195 /* Switkher.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -46,9 +46,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		EDDA54C03082781100622195 /* Contexwitch */ = {
+		EDDA54C03082781100622195 /* Switkher */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = EDDA54CE3082781100622195 /* Build configuration list for PBXNativeTarget "Contexwitch" */;
+			buildConfigurationList = EDDA54CE3082781100622195 /* Build configuration list for PBXNativeTarget "Switkher" */;
 			buildPhases = (
 				EDDA54BD3082781100622195 /* Sources */,
 				EDDA54BE3082781100622195 /* Frameworks */,
@@ -59,9 +59,9 @@
 			fileSystemSynchronizedGroups = (
 				EDDA54C33082781100622195 /* Contexwitch */,
 			);
-			name = Contexwitch;
+			name = Switkher;
 			productName = Contexwitch;
-			productReference = EDDA54C13082781100622195 /* Contexwitch.app */;
+			productReference = EDDA54C13082781100622195 /* Switkher.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -79,7 +79,7 @@
 					};
 				};
 			};
-			buildConfigurationList = EDDA54BC3082781100622195 /* Build configuration list for PBXProject "Contexwitch" */;
+			buildConfigurationList = EDDA54BC3082781100622195 /* Build configuration list for PBXProject "Switkher" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -93,7 +93,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EDDA54C03082781100622195 /* Contexwitch */,
+				EDDA54C03082781100622195 /* Switkher */,
 			);
 		};
 /* End PBXProject section */
@@ -115,7 +115,7 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		EDDA54CC3082781100622195 /* Debug configuration for PBXProject "Contexwitch" */ = {
+		EDDA54CC3082781100622195 /* Debug configuration for PBXProject "Switkher" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -179,7 +179,7 @@
 			};
 			name = Debug;
 		};
-		EDDA54CD3082781100622195 /* Release configuration for PBXProject "Contexwitch" */ = {
+		EDDA54CD3082781100622195 /* Release configuration for PBXProject "Switkher" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -235,15 +235,16 @@
 			};
 			name = Release;
 		};
-		EDDA54CF3082781100622195 /* Debug configuration for PBXNativeTarget "Contexwitch" */ = {
+		EDDA54CF3082781100622195 /* Debug configuration for PBXNativeTarget "Switkher" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 45BT9NU438;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 83Q57587KR;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -255,7 +256,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = parikshith.Switkher;
 				PRODUCT_NAME = Switkher;
 				REGISTER_APP_GROUPS = YES;
@@ -268,15 +269,16 @@
 			};
 			name = Debug;
 		};
-		EDDA54D03082781100622195 /* Release configuration for PBXNativeTarget "Contexwitch" */ = {
+		EDDA54D03082781100622195 /* Release configuration for PBXNativeTarget "Switkher" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 45BT9NU438;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = 83Q57587KR;
 				ENABLE_APP_SANDBOX = NO;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -288,7 +290,7 @@
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = parikshith.Switkher;
 				PRODUCT_NAME = Switkher;
 				REGISTER_APP_GROUPS = YES;
@@ -304,19 +306,19 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		EDDA54BC3082781100622195 /* Build configuration list for PBXProject "Contexwitch" */ = {
+		EDDA54BC3082781100622195 /* Build configuration list for PBXProject "Switkher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EDDA54CC3082781100622195 /* Debug configuration for PBXProject "Contexwitch" */,
-				EDDA54CD3082781100622195 /* Release configuration for PBXProject "Contexwitch" */,
+				EDDA54CC3082781100622195 /* Debug configuration for PBXProject "Switkher" */,
+				EDDA54CD3082781100622195 /* Release configuration for PBXProject "Switkher" */,
 			);
 			defaultConfigurationName = Release;
 		};
-		EDDA54CE3082781100622195 /* Build configuration list for PBXNativeTarget "Contexwitch" */ = {
+		EDDA54CE3082781100622195 /* Build configuration list for PBXNativeTarget "Switkher" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				EDDA54CF3082781100622195 /* Debug configuration for PBXNativeTarget "Contexwitch" */,
-				EDDA54D03082781100622195 /* Release configuration for PBXNativeTarget "Contexwitch" */,
+				EDDA54CF3082781100622195 /* Debug configuration for PBXNativeTarget "Switkher" */,
+				EDDA54D03082781100622195 /* Release configuration for PBXNativeTarget "Switkher" */,
 			);
 			defaultConfigurationName = Release;
 		};

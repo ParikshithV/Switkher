@@ -122,7 +122,7 @@ struct MenuBarPopover: View {
                 .font(.system(size: 11))
                 .foregroundStyle(.tertiary)
             Spacer()
-            Button("Quit") { NSApp.terminate(nil) }
+            Button("Quit Switkher") { NSApp.terminate(nil) }
                 .keyboardShortcut("q")
                 .glassButtonStyle()
                 .controlSize(.small)

@@ -1,0 +1,358 @@
+---
+// An interactive, in-browser replica of the Switkher panel.
+interface Row {
+	app: string;
+	title: string;
+	subtitle: string;
+	color: string;
+	tabs?: number;
+}
+
+const rows: Row[] = [
+	{ app: 'Safari', title: 'Astro Docs — Getting Started', subtitle: 'Safari · Tab', color: '#3a8ef6', tabs: 14 },
+	{ app: 'Xcode', title: 'SwitcherView.swift — Switkher', subtitle: 'Xcode', color: '#2f7cf6' },
+	{ app: 'Slack', title: 'Slack — #design-review', subtitle: 'Slack', color: '#e01e5a' },
+	{ app: 'Figma', title: 'Landing page — Figma', subtitle: 'Figma', color: '#a259ff' },
+	{ app: 'Terminal', title: 'website — npm run dev', subtitle: 'Terminal', color: '#3b3b3b', tabs: 3 },
+	{ app: 'Notes', title: 'Launch checklist', subtitle: 'Notes · Minimized', color: '#f4cf6b' },
+	{ app: 'Music', title: 'Late Night Coding', subtitle: 'Music', color: '#fa3c55' },
+	{ app: 'Mail', title: 'Inbox — 3 unread', subtitle: 'Mail', color: '#1e90ff' },
+	{ app: 'Safari', title: 'GitHub — ParikshithV/Switkher', subtitle: 'Safari · Tab', color: '#3a8ef6' },
+];
+
+const favorites = [
+	{ letter: 'S', color: '#3a8ef6' },
+	{ letter: 'X', color: '#2f7cf6' },
+	{ letter: 'T', color: '#3b3b3b' },
+	{ letter: 'M', color: '#fa3c55' },
+];
+---
+
+<div class="panel" data-switcher>
+	<label class="search">
+		<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+			<circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.2"></circle>
+			<path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"></path>
+		</svg>
+		<input type="text" placeholder="Search windows and tabs" aria-label="Try searching windows and tabs" autocomplete="off" spellcheck="false" />
+	</label>
+	<ul class="rows" role="listbox">
+		{
+			rows.map((row, i) => (
+				<li class:list={['row', { selected: i === 0 }]} role="option" data-search={`${row.title} ${row.app}`}>
+					<span class="app-icon" style={`--c: ${row.color}`}>{row.app[0]}</span>
+					<span class="text">
+						<span class="title">{row.title}</span>
+						<span class="subtitle">{row.subtitle}</span>
+					</span>
+					{row.tabs && <span class="tabs">{row.tabs} tabs</span>}
+					<span class="index" />
+				</li>
+			))
+		}
+		<li class="empty" hidden>No windows or tabs match “<span></span>”</li>
+	</ul>
+	<div class="favorites">
+		{
+			favorites.map((f) => (
+				<span class="fav">
+					<span class="app-icon small" style={`--c: ${f.color}`} />
+					<kbd>{f.letter}</kbd>
+				</span>
+			))
+		}
+	</div>
+	<div class="footer">
+		<span><kbd>↩</kbd> Switch</span>
+		<span><kbd>↑↓</kbd> Navigate</span>
+		<span><kbd>1–9</kbd> Jump</span>
+		<span class="hide-sm"><kbd>→</kbd> Show tabs</span>
+		<span class="spacer"></span>
+		<span><kbd>esc</kbd> Close</span>
+	</div>
+</div>
+
+<script>
+	function fuzzy(query: string, text: string) {
+		const haystack = text.toLowerCase();
+		return query
+			.toLowerCase()
+			.split(/\s+/)
+			.filter(Boolean)
+			.every((token) => {
+				if (haystack.includes(token)) return true;
+				let cursor = 0;
+				for (const ch of token) {
+					cursor = haystack.indexOf(ch, cursor);
+					if (cursor === -1) return false;
+					cursor++;
+				}
+				return true;
+			});
+	}
+
+	for (const panel of document.querySelectorAll<HTMLElement>('[data-switcher]')) {
+		const input = panel.querySelector('input')!;
+		const rows = [...panel.querySelectorAll<HTMLElement>('.row')];
+		const empty = panel.querySelector<HTMLElement>('.empty')!;
+		let visible = rows;
+		let selected = 0;
+
+		const render = () => {
+			rows.forEach((row) => row.classList.remove('selected'));
+			visible.forEach((row, i) => {
+				row.querySelector('.index')!.textContent = i < 9 ? String(i + 1) : '';
+				row.classList.toggle('selected', i === selected);
+			});
+			visible[selected]?.scrollIntoView({ block: 'nearest' });
+		};
+
+		const flash = () => {
+			const row = visible[selected];
+			if (!row) return;
+			row.classList.remove('flash');
+			void row.offsetWidth;
+			row.classList.add('flash');
+		};
+
+		input.addEventListener('input', () => {
+			const q = input.value.trim();
+			visible = rows.filter((row) => {
+				const match = !q || fuzzy(q, row.dataset.search!);
+				row.hidden = !match;
+				return match;
+			});
+			empty.hidden = visible.length > 0;
+			empty.querySelector('span')!.textContent = q;
+			selected = 0;
+			render();
+		});
+
+		input.addEventListener('keydown', (e) => {
+			if (!visible.length) return;
+			if (e.key === 'ArrowDown' || (e.key === 'Tab' && !e.shiftKey)) {
+				selected = (selected + 1) % visible.length;
+			} else if (e.key === 'ArrowUp' || (e.key === 'Tab' && e.shiftKey)) {
+				selected = (selected - 1 + visible.length) % visible.length;
+			} else if (e.key === 'Enter') {
+				flash();
+			} else if (e.key === 'Escape') {
+				input.value = '';
+				input.dispatchEvent(new Event('input'));
+			} else if (/^[1-9]$/.test(e.key) && (e.altKey || e.metaKey || e.ctrlKey)) {
+				const i = Number(e.key) - 1;
+				if (i < visible.length) selected = i;
+				render();
+				flash();
+				e.preventDefault();
+				return;
+			} else {
+				return;
+			}
+			e.preventDefault();
+			render();
+		});
+
+		rows.forEach((row) =>
+			row.addEventListener('click', () => {
+				selected = visible.indexOf(row);
+				render();
+				flash();
+			}),
+		);
+
+		render();
+	}
+</script>
+
+<style>
+	.panel {
+		width: min(640px, 100%);
+		border-radius: 22px;
+		background: rgba(32, 26, 40, 0.72);
+		backdrop-filter: blur(40px) saturate(1.6);
+		-webkit-backdrop-filter: blur(40px) saturate(1.6);
+		border: 1px solid rgba(255, 255, 255, 0.14);
+		box-shadow:
+			0 40px 120px -20px rgba(0, 0, 0, 0.8),
+			0 0 0 0.5px rgba(0, 0, 0, 0.6),
+			inset 0 1px 0 rgba(255, 255, 255, 0.08);
+		overflow: hidden;
+		text-align: left;
+		font-size: 14px;
+	}
+
+	.search {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		height: 54px;
+		padding: 0 18px;
+		color: var(--muted);
+		border-bottom: 1px solid var(--border);
+	}
+
+	.search input {
+		flex: 1;
+		min-width: 0;
+		background: none;
+		border: 0;
+		outline: none;
+		color: var(--text);
+		font: inherit;
+		font-size: 19px;
+	}
+
+	.search input::placeholder {
+		color: var(--faint);
+	}
+
+	.rows {
+		list-style: none;
+		margin: 0;
+		padding: 6px;
+		height: 320px;
+		overflow-y: auto;
+		scrollbar-width: none;
+	}
+
+	.row {
+		display: flex;
+		align-items: center;
+		gap: 12px;
+		padding: 8px 10px;
+		border-radius: 10px;
+		cursor: default;
+	}
+
+	.row[hidden] {
+		display: none;
+	}
+
+	.row.selected {
+		background: rgba(255, 255, 255, 0.11);
+	}
+
+	.row.flash {
+		animation: flash 0.45s ease;
+	}
+
+	@keyframes flash {
+		40% {
+			background: color-mix(in srgb, var(--orange) 45%, transparent);
+		}
+	}
+
+	.app-icon {
+		flex: none;
+		display: grid;
+		place-items: center;
+		width: 30px;
+		height: 30px;
+		border-radius: 8px;
+		background: linear-gradient(160deg, color-mix(in srgb, var(--c) 100%, white 18%), var(--c));
+		color: white;
+		font-weight: 700;
+		font-size: 14px;
+		box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.2);
+	}
+
+	.app-icon.small {
+		width: 22px;
+		height: 22px;
+		border-radius: 6px;
+	}
+
+	.text {
+		flex: 1;
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.title,
+	.subtitle {
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.title {
+		font-weight: 500;
+	}
+
+	.subtitle {
+		font-size: 12px;
+		color: var(--faint);
+	}
+
+	.tabs {
+		font-size: 11px;
+		color: var(--muted);
+		padding: 2px 8px;
+		border-radius: 99px;
+		background: rgba(255, 255, 255, 0.08);
+	}
+
+	.index {
+		width: 14px;
+		text-align: right;
+		font-size: 12px;
+		color: var(--faint);
+	}
+
+	.empty {
+		padding: 40px 0;
+		text-align: center;
+		color: var(--faint);
+	}
+
+	.favorites {
+		display: flex;
+		gap: 14px;
+		padding: 8px 16px;
+		border-top: 1px solid var(--border);
+	}
+
+	.fav {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	.fav kbd {
+		font-size: 11px;
+		color: var(--muted);
+	}
+
+	.footer {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		height: 34px;
+		padding: 0 14px;
+		border-top: 1px solid var(--border);
+		color: var(--faint);
+		font-size: 12px;
+	}
+
+	.footer kbd {
+		font-size: 10px;
+		height: 1.8em;
+		margin-right: 4px;
+		color: var(--muted);
+	}
+
+	.spacer {
+		flex: 1;
+	}
+
+	@media (max-width: 560px) {
+		.hide-sm {
+			display: none;
+		}
+		.footer {
+			gap: 10px;
+		}
+	}
+</style>
