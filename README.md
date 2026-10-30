@@ -60,4 +60,4 @@ Build the website with `npm run build`. Deploy with `npm run deploy` when Cloudf
 
 ## License
 
-No license file is currently included. Contact the author before redistributing or reusing this project.
+Switkher is released under the [MIT License](LICENSE).
